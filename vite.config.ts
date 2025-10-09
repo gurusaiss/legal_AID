@@ -5,6 +5,7 @@ import { createServer } from "./server";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  
   base: mode === 'production' ? '/legal_AID/' : '/',
   server: {
     host: "::",
