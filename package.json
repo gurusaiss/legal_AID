@@ -11,13 +11,16 @@
     ]
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview",
-    "start": "vite preview",
+    "preview": "vite preview --host",
+    "start": "vite preview --host",
+    "build:client": "vite build",
+    "build:server": "vite build --config vite.config.server.ts",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "netlify-dev": "netlify dev"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

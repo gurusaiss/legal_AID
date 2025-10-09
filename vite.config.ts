@@ -15,12 +15,28 @@ export default defineConfig(({ mode }) => ({
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     },
-    
     host: "::",
-    port: 8080,
+    port: 3000, // Changed to 3000 to match Netlify dev port
+    strictPort: true,
+    open: true,
     fs: {
-      allow: ["./client", "./shared"],
-      deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "server/**"],
+      // Allow serving files from the project root
+      allow: [
+        "./client", 
+        "./shared",
+        "./public",
+        "." // Allow serving from project root
+      ],
+      deny: [
+        // Default Vite restrictions
+        "**/node_modules/**",
+        "**/.git/**",
+        // Your custom restrictions
+        ".env", 
+        ".env.*", 
+        "*.{crt,pem}",
+        "server/**"
+      ],
     },
   },
   build: {
