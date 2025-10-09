@@ -1,10 +1,12 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
-import path from "path";
-import type { UserConfig } from 'vite';
+import { defineConfig, type UserConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }): UserConfig => {
+export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
   
   const config: UserConfig = {
@@ -16,10 +18,10 @@ export default defineConfig(({ mode }): UserConfig => {
     
     // Resolve configuration
     resolve: {
-      alias: {
-        '@': path.resolve(__dirname, './client'),
-        '@shared': path.resolve(__dirname, './shared')
-      }
+      alias: [
+        { find: '@', replacement: path.resolve(__dirname, './client') },
+        { find: '@shared', replacement: path.resolve(__dirname, './shared') }
+      ]
     },
     
     // Build configuration
@@ -27,64 +29,40 @@ export default defineConfig(({ mode }): UserConfig => {
       outDir: 'dist',
       emptyOutDir: true,
       sourcemap: !isProduction,
-      minify: isProduction ? 'esbuild' : false
+      minify: isProduction ? 'esbuild' : false,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            react: ['react', 'react-dom', 'react-router-dom'],
+            ui: ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu']
+          }
+        }
+      }
     },
     
-    // Server configuration (only for development)
+    // Server configuration (development only)
     server: !isProduction ? {
       host: '0.0.0.0',
       port: 3000,
       strictPort: true,
       open: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
+      proxy: {
+        '/api': {
+          target: 'http://localhost:3000',
+          changeOrigin: true,
+          rewrite: (p: string) => p.replace(/^\/api/, '')
+        }
+      },
+      fs: {
+        allow: [
+          "./client",
+          "./shared",
+          "./public",
+          "."
+        ]
       }
-    },
-    fs: {
-      // Allow serving files from the project root
-      allow: [
-        "./client", 
-        "./shared",
-        "./public",
-        "." // Allow serving from project root
-      ],
-      deny: [
-        // Default Vite restrictions
-        "**/node_modules/**",
-        "**/.git/**",
-        // Your custom restrictions
-        ".env", 
-        ".env.*", 
-        "*.{crt,pem}",
-        "server/**"
-      ],
-    },
-  },
-  build: {
-    outDir: mode === 'production' ? 'docs' : 'dist/spa',
-  },
-  plugins: [react(), expressPlugin()],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./client"),
-      "@shared": path.resolve(__dirname, "./shared"),
-    },
-  },
-}));
-
-
-function expressPlugin(): Plugin {
-  return {
-    name: "express-plugin",
-    apply: "serve", // Only apply during development (serve mode)
-    configureServer(server) {
-      const app = createServer();
-
-      // Add Express app as middleware to Vite dev server
-      server.middlewares.use(app);
-    },
+    } : undefined
   };
-}
+
+  return config;
+});
