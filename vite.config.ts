@@ -8,6 +8,14 @@ export default defineConfig(({ mode }) => ({
   
   base: mode === 'production' ? '/legal_AID/' : '/',
   server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    },
+    
     host: "::",
     port: 8080,
     fs: {
@@ -26,6 +34,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
 }));
+
 
 function expressPlugin(): Plugin {
   return {
