@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found</title>
+  <script>
+    // Redirect to the main app with the current path
+    sessionStorage.redirect = location.pathname;
+    // Redirect to the main app
+    window.location.href = '/legal_AID/' + 
+      (location.search || '') + 
+      (location.hash || '');
+  </script>
+</head>
+<body>
+  <h1>Redirecting to the application...</h1>
+  <p>If you are not redirected automatically, <a href="/legal_AID/">click here</a>.</p>
+</body>
+</html>

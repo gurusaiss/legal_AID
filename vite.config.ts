@@ -6,7 +6,9 @@ import { createServer } from "./server";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   
-  base: mode === 'production' ? '/legal_AID/' : '/',
+  // For GitHub Pages, use the repository name as base
+  // For local development, use root
+  base: process.env.NODE_ENV === 'production' ? '/legal_AID/' : '/',
   server: {
     proxy: {
       '/api': {

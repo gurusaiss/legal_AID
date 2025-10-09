@@ -12,10 +12,10 @@
   },
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
+    "build": "set NODE_ENV=production && vite build",
     "preview": "vite preview --host",
     "start": "vite preview --host",
-    "build:client": "vite build",
+    "build:client": "set NODE_ENV=production && vite build",
     "build:server": "vite build --config vite.config.server.ts",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
