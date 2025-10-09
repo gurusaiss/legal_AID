@@ -5,6 +5,7 @@ import { createServer } from "./server";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/legal_AID/' : '/',
   server: {
     host: "::",
     port: 8080,
@@ -14,7 +15,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    outDir: "dist/spa",
+    outDir: mode === 'production' ? 'docs' : 'dist/spa',
   },
   plugins: [react(), expressPlugin()],
   resolve: {
