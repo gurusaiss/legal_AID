@@ -11,21 +11,23 @@
     ]
   },
   "scripts": {
-    "dev": "vite --host",
-    "build": "set NODE_ENV=production && vite build",
-    "preview": "vite preview --host",
+    "dev": "vite --host 0.0.0.0 --port 3000",
+    "build": "tsc && vite build",
+    "preview": "vite preview --port 3000",
     "start": "vite preview --host",
     "build:client": "set NODE_ENV=production && vite build",
     "build:server": "vite build --config vite.config.server.ts",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
     "typecheck": "tsc",
+    "vercel-build": "node vercel-build.js",
     "netlify-dev": "netlify dev"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "react-error-boundary": "^6.0.0",
     "react-icons": "^5.5.0",
     "zod": "^3.25.76"
   },
@@ -62,7 +64,7 @@
     "@react-three/fiber": "^8.18.0",
     "@swc/core": "^1.13.3",
     "@tailwindcss/typography": "^0.5.16",
-    "@tanstack/react-query": "^5.84.2",
+    "@tanstack/react-query": "^5.90.2",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/node": "^24.2.1",

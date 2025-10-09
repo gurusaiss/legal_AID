@@ -1,15 +1,41 @@
-import { defineConfig, Plugin } from "vite";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { createServer } from "./server";
+import type { UserConfig } from 'vite';
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode }): UserConfig => {
+  const isProduction = mode === 'production';
   
-  // For GitHub Pages, use the repository name as base
-  // For local development, use root
-  base: process.env.NODE_ENV === 'production' ? '/legal_AID/' : '/',
-  server: {
+  const config: UserConfig = {
+    // Base URL configuration
+    base: isProduction ? '/legal_AID/' : '/',
+    
+    // Plugins
+    plugins: [react()],
+    
+    // Resolve configuration
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './client'),
+        '@shared': path.resolve(__dirname, './shared')
+      }
+    },
+    
+    // Build configuration
+    build: {
+      outDir: 'dist',
+      emptyOutDir: true,
+      sourcemap: !isProduction,
+      minify: isProduction ? 'esbuild' : false
+    },
+    
+    // Server configuration (only for development)
+    server: !isProduction ? {
+      host: '0.0.0.0',
+      port: 3000,
+      strictPort: true,
+      open: true,
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
@@ -17,10 +43,6 @@ export default defineConfig(({ mode }) => ({
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     },
-    host: "::",
-    port: 3000, // Changed to 3000 to match Netlify dev port
-    strictPort: true,
-    open: true,
     fs: {
       // Allow serving files from the project root
       allow: [
