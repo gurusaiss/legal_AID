@@ -2,6 +2,7 @@ import { defineConfig, type UserConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { expressApiPlugin } from './vite-plugin-express-api';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -13,8 +14,8 @@ export default defineConfig(({ mode }) => {
     // Base URL configuration
     base: isProduction ? '/legal_AID/' : '/',
     
-    // Plugins
-    plugins: [react()],
+    // Plugins (Express API on same origin in dev — see vite-plugin-express-api.ts)
+    plugins: [react(), expressApiPlugin()],
     
     // Resolve configuration
     resolve: {
@@ -46,13 +47,6 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       strictPort: true,
       open: true,
-      proxy: {
-        '/api': {
-          target: 'http://localhost:3000',
-          changeOrigin: true,
-          rewrite: (p: string) => p.replace(/^\/api/, '')
-        }
-      },
       fs: {
         allow: [
           "./client",

@@ -21,7 +21,7 @@ const I18nContext = createContext<I18nContextValue | undefined>(undefined);
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(() => {
     const stored = typeof window !== "undefined" ? (localStorage.getItem(I18N_KEY) as Lang | null) : null;
-    return stored === "en" || stored === "te" ? stored : "en";
+    return stored === "en" || stored === "te" || stored === "hi" ? stored : "en";
   });
 
   const setLang = (l: Lang) => {
@@ -39,7 +39,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   }, [lang]);
 
   useEffect(() => {
-    document.documentElement.lang = lang === "te" ? "te" : "en";
+    document.documentElement.lang = lang === "te" ? "te" : lang === "hi" ? "hi" : "en";
   }, [lang]);
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;

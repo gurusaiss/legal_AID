@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import { useI18n } from "@/i18n";
 import { Search, ChevronDown } from "lucide-react";
-import { topics as DATA } from "@/data/knowledge_fixed";
+import { topics as DATA } from "@/data/knowledge";
 import { useMemo, useState } from "react";
 
 export default function KnowledgeBase() {

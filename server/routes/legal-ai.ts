@@ -4,10 +4,25 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 export const handleLegalAI: RequestHandler = async (req, res) => {
   try {
     const { message, history } = req.body;
-    
-    // Initialize the Gemini API with your API key
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    if (typeof message !== "string" || !message.trim()) {
+      res.status(400).json({ error: "message is required" });
+      return;
+    }
+    const apiKey = (process.env.GEMINI_API_KEY || "").trim();
+
+    if (!apiKey) {
+      res.json({
+        response:
+          "Preview mode: add GEMINI_API_KEY to a `.env` file in the project root to enable live AI answers. " +
+          "You can still use the Knowledge Base and other tools. " +
+          "This message is not legal advice—consult a qualified advocate for your situation.",
+        history: [],
+      });
+      return;
+    }
+
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     // Create a chat session
     const chat = model.startChat({
@@ -35,11 +50,12 @@ export const handleLegalAI: RequestHandler = async (req, res) => {
       response: text,
       history: await chat.getHistory()
     });
-  } catch (error) {
-    console.error('Error in legal AI endpoint:', error);
-    res.status(500).json({ 
-      error: 'Failed to process your request',
-      details: error.message 
+  } catch (error: unknown) {
+    console.error("Error in legal AI endpoint:", error);
+    const details = error instanceof Error ? error.message : String(error);
+    res.status(500).json({
+      error: "Failed to process your request",
+      details,
     });
   }
 };
