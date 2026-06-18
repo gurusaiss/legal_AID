@@ -11,11 +11,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <Link to="/home" className="font-extrabold tracking-tight text-slate-900">
             <span className="mr-2">⚖️</span> {t("brand")}
           </Link>
-          <nav className="hidden gap-6 text-sm font-medium md:flex">
+          <nav className="hidden gap-1 text-sm font-medium md:flex">
             <NavItem to="/home" label={t("home")} />
             <NavItem to="/knowledge-base" label={t("knowledge_base")} />
-            <NavItem to="/submit-grievance" label={t("submit_grievance")} />
+            <NavItem to="/submit-grievance" label="Grievance" />
+            <NavItem to="/document-templates" label="Documents" />
             <NavItem to="/my-cases" label={t("my_cases")} />
+            <NavItem to="/talk-to-legal" label="AI Chat" />
           </nav>
           <div className="flex items-center gap-2">
             <TranslateButton />

@@ -21,6 +21,7 @@ import TalkToLegal from "./pages/TalkToLegal";
 import OfflineForms from "./pages/OfflineForms";
 import References from "./pages/References";
 import Dashboard from "./pages/Dashboard";
+import DocumentTemplates from "./pages/DocumentTemplates";
 
 // Error Fallback Component
 function ErrorFallback({ error, resetErrorBoundary }: { error: Error, resetErrorBoundary: () => void }) {
@@ -78,6 +79,7 @@ const App = () => (
                     <Route path="/offline-forms" element={<OfflineForms />} />
                     <Route path="/references" element={<References />} />
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/document-templates" element={<DocumentTemplates />} />
                     <Route path="/404" element={<NotFound />} />
                     <Route path="*" element={<Navigate to="/404" replace />} />
                   </Routes>
