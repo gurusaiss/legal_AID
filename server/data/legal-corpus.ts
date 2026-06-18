@@ -319,4 +319,265 @@ Protection from sexual abuse (POCSO Act 2012):
 
 Report child in distress: Childline 1098`,
   },
+
+  // ─── Additional focused chunks ────────────────────────────────────────────
+
+  {
+    title: "Tribal Land Protection — AP Land Transfer Regulation and 1/70 Order",
+    category: "Tribal Rights",
+    source: "AP (Scheduled Areas) Land Transfer Regulation, 1959 (1/70 LTR); Telangana Scheduled Areas Land Transfer Regulation, 1959",
+    content: `Under the Andhra Pradesh (Scheduled Areas) Land Transfer Regulation 1959 (commonly called 1/70 LTR), any transfer of land from a tribal person to a non-tribal in a Scheduled Area is VOID and has no legal effect.
+
+Key provisions:
+- Section 3: Transfer of land by a tribal to a non-tribal without prior permission of the District Collector is prohibited and void.
+- Section 3-A: Alienated land must be restored to the original tribal owner by the Collector.
+- The 1/70 LTR covers all Scheduled Areas (tribal belt) in both Telangana and Andhra Pradesh.
+- Even a registered sale deed transferring tribal land to a non-tribal is illegal and void under this regulation.
+
+How to get land restored:
+1. File application to the Sub-Divisional Officer (SDO) or Revenue Divisional Officer (RDO) citing Section 3-A of the LTR.
+2. The SDO can conduct an inquiry and order restoration of land.
+3. If SDO fails to act within 90 days, appeal to the Collector.
+4. File a civil suit in the Civil Court simultaneously for better protection.
+5. Also file complaint with the District Tribal Welfare Officer.
+
+How non-tribals circumvent the law — recognize these:
+- Benami transactions (land registered in tribal name but actually owned by non-tribal)
+- Mortgage-turned-sale: tribal mortgages land, non-tribal refuses to return it
+- Leasing arrangements: long-term leases effectively function as transfers
+
+Important: If you are a tribal and someone has taken your land without legal permission, it doesn't matter how many years ago — you can still file for restoration. Time limits are relaxed for tribal land cases.
+
+Free legal aid for tribal land restoration: DLSA, Tribal Welfare Department's Legal Cell, Helpline 15100.`,
+  },
+
+  {
+    title: "Caste Certificate — How to Obtain SC/ST/OBC Certificate",
+    category: "Government Services",
+    source: "AP Scheduled Castes, Scheduled Tribes and Backward Classes (Certificate of Eligibility) Rules; Telangana SC/ST Certificate Rules",
+    content: `A caste certificate (SC/ST/OBC certificate) is essential for accessing reservations, government jobs, education benefits, and legal rights.
+
+How to apply for a caste certificate in Telangana:
+1. Visit your Mandal Revenue Office (MRO) or apply online at ts.meeseva.telangana.gov.in
+2. Required documents: Ration card, Aadhaar card, evidence of caste (father's/grandfather's caste certificate or affidavit), address proof
+3. Application fee: Nominal (around Rs. 35) at Mee Seva; free at MRO
+4. Timeline: Certificate must be issued within 15 working days
+
+How to apply in Andhra Pradesh:
+1. Apply at Mee Seva / AP Seva centers or online at meeseva.ap.gov.in
+2. Same documents required
+3. Timeline: Within 15 working days
+
+If MRO refuses or delays:
+- Send registered complaint to Revenue Divisional Officer (RDO)
+- File RTI to know status of your application and reason for delay
+- File complaint at district grievance cell / Janmabhoomi
+
+For children starting school: Apply at the time of admission — school authorities will help. Private schools with RTE 25% reservation require valid income + caste certificate.
+
+Community certificate for Scheduled Tribes (ST) requires ADDITIONAL verification from ITDA (Integrated Tribal Development Authority) or Tribal Welfare Department. This is different from the regular MRO process.
+
+Fake caste certificates carry imprisonment up to 3 years. Do not misuse.
+
+Help: Your nearest DLSA can assist with caste certificate applications. National Helpline: 15100.`,
+  },
+
+  {
+    title: "Pension Schemes — Old Age, Widow and Disability Pensions in TS and AP",
+    category: "Social Welfare",
+    source: "National Social Assistance Programme; Telangana Aasara Pension; Andhra Pradesh Jagananna Pension Kanuka",
+    content: `Both Telangana and Andhra Pradesh run pension schemes that provide monthly income support to eligible citizens.
+
+Telangana — Aasara Pension (Rhythu Bandhu):
+- Old Age Pension (60+ years): Rs. 2,016/month; SC/ST elderly get additional priority
+- Widow Pension: Any widow below poverty line
+- Disability Pension: Persons with 40%+ disability
+- Single Women Pension (unmarried, divorced, deserted women above 18)
+- Eligibility: Annual family income below Rs. 1,50,000; no government job in family; not an income tax payer
+
+Andhra Pradesh — Jagananna Pension Kanuka:
+- Old Age: Rs. 3,000/month (above 60)
+- Widow: Rs. 3,000/month
+- Disability: Rs. 3,000/month
+- Weavers/Toddy Tappers/Fishermen: Special rates
+
+How to apply:
+1. Visit your Gram Panchayat Sachivalayam (AP) or MRO/Gram Panchayat (Telangana)
+2. Documents needed: Aadhaar card, bank passbook, age proof (voter ID / birth certificate), ration card, disability certificate (for disability pension)
+3. Submit form — Panchayat Secretary will verify on-field
+4. Pension credited directly to Aadhaar-linked bank account monthly
+
+If pension is stopped or not received:
+1. Check your bank account and Aadhaar-bank linkage at Aadhaar Seeding Camp
+2. Complaint to Sachivalayam / MRO
+3. File RTI asking why pension was stopped and under what order
+4. Approach DLSA for free legal help if official refuses to reinstate
+
+Helplines: AP — 1902 (Jagananna); Telangana — 040-23450817`,
+  },
+
+  {
+    title: "MGNREGA — Wage Payment Delays and Grievance Process",
+    category: "Employment Rights",
+    source: "MGNREGA 2005; MGNREGA Operational Guidelines 2013",
+    content: `Under the Mahatma Gandhi National Rural Employment Guarantee Act 2005, wages must be paid within 15 days of completing work. Delays beyond 15 days entitle you to compensation.
+
+Wage payment rights:
+- Wages must be paid within 15 days of completion of work
+- If delayed beyond 15 days: compensation at 0.05% per day of the delayed wages (under MGNREGA Schedule II)
+- Wages must go directly to bank or post office account — no cash payment through contractor
+- Minimum wage guaranteed: Telangana Rs. 257/day; AP Rs. 237/day (2024-25 rates, revised annually)
+
+Step-by-step grievance process for unpaid wages:
+1. Check your muster roll entry at the Gram Panchayat — verify your work attendance is recorded correctly
+2. File written complaint to the Gram Panchayat Rozgar Sahayak (GRS) and Program Officer (PO) at Block level
+3. If no action in 7 days, escalate to District Program Coordinator (DPC) at Zilla Parishad
+4. File online complaint at nrega.nic.in (MGNREGA public grievance portal)
+5. Request for Social Audit: Gram Sabha Social Audit must investigate wage payment delays
+6. Approach DLSA if wages exceed Rs. 10,000 unpaid — free legal aid available
+
+How to use RTI to expose wage fraud:
+- Request muster rolls (Form 3A) for your project from Gram Panchayat
+- Request payment register (Form 12) showing when wages were credited
+- If names are forged or payments diverted, file complaint to District Collector / Anti-Corruption Bureau
+
+Do not let anyone deduct wages for "pass-through" — it is illegal. All MGNREGA payments are direct benefit transfers (DBT) and no middleman can take a cut.`,
+  },
+
+  {
+    title: "SC/ST Atrocity Case — FIR Filing and Survivor Rights",
+    category: "Atrocities Prevention",
+    source: "SC/ST (Prevention of Atrocities) Act 1989; PoA Rules 1995; Amendment Act 2015",
+    content: `Filing an FIR under the SC/ST (Prevention of Atrocities) Act 1989 gives you stronger legal protections than a regular criminal case.
+
+Mandatory FIR process:
+- Police MUST register the FIR immediately — no preliminary inquiry allowed (Supreme Court: Subhash Kashinath Mahajan, 2018 and subsequent restoration)
+- The FIR must be registered at ANY police station; a Zero FIR will be transferred to the police station having jurisdiction
+- If police refuse: send complaint by registered post to Superintendent of Police (SP) with copy to DLSA
+- If SP also fails: file complaint before Judicial Magistrate under Section 156(3) CrPC — Magistrate can direct police to register
+
+Special investigation rules:
+- Investigation must be completed within 60 days of filing FIR
+- Only a Deputy Superintendent of Police (DSP) or higher officer can investigate SC/ST atrocity cases
+- No anticipatory bail available to the accused
+
+Immediate relief from Collector (mandatory within 7 days):
+- Medical assistance and hospitalization costs
+- Funeral expenses (in death cases)
+- Monetary relief as prescribed in PoA Rules — varies from Rs. 85,000 to Rs. 8.25 lakh depending on offence
+- Immediate payment of 25% of monetary relief when FIR is registered; balance after conviction
+- Transportation to hospital and to court hearings at government expense
+
+Special Court:
+- Every district must have a Special Court (Sessions Court designated) for PoA cases
+- Special Public Prosecutor is appointed to represent the State
+- Trial must be completed within 2 months of chargesheet
+
+If officials fail to act: file complaint to State SC/ST Commission, National SC/ST Commission (complaint portal: ncsc.nic.in), or High Court.`,
+  },
+
+  {
+    title: "Women's Property Rights — Hindu Succession and Marriage Laws",
+    category: "Women's Rights",
+    source: "Hindu Succession Act 1956 (Amendment 2005); Hindu Marriage Act 1955; Muslim Personal Law",
+    content: `Hindu women (and those under Hindu law — including Sikhs, Jains, Buddhists) gained equal coparcenary rights in ancestral property under the Hindu Succession (Amendment) Act 2005.
+
+Key rights under the 2005 Amendment:
+- Daughters now have EQUAL rights in ancestral/joint family property — same as sons
+- This right exists from birth — even daughters born before 2005 have equal rights
+- The 2005 rights are retroactive: they apply even if father died before 2005 (Supreme Court: Vineeta Sharma vs Rakesh Sharma, 2020)
+- A daughter cannot be excluded from ancestral property by a will or family agreement
+
+Rights on husband's property (in case of death):
+- Class I heirs share equally: wife, son, daughter, mother
+- Second wife and children from second marriage also have full rights if marriage is legally valid
+- You cannot be evicted from the matrimonial home — you have a right of residence
+
+Rights in agricultural land (specific to TS/AP):
+- Agricultural land succession follows same rules for Hindus
+- If land records show father's name, apply for mutation including daughter's/wife's name at MRO after obtaining death certificate and legal heirship certificate
+
+Muslim women's inheritance (Muslim Personal Law):
+- Daughter inherits half the share of a son in father's estate
+- Wife inherits 1/8th if children exist; 1/4th if no children
+- These are minimum rights and cannot be denied by will
+
+Maintenance rights:
+- Divorced Hindu wife is entitled to maintenance under Section 25 of Hindu Marriage Act
+- Muslim women's right to maintenance after divorce — refer to Muslim Women (Protection of Rights on Divorce) Act 1986
+- Maintenance application filed in Family Court; DLSA provides free lawyer
+
+Help: One Stop Centre (Sakhi), Women's Helpline 181, DLSA Helpline 15100`,
+  },
+
+  {
+    title: "Gram Sabha Rights and Powers Under PESA and FRA",
+    category: "Tribal Rights",
+    source: "PESA Act 1996; Forest Rights Act 2006; Telangana Panchayati Raj Act; AP Panchayat Raj Act",
+    content: `The Gram Sabha is the general assembly of ALL adult voters in a village. In Scheduled (tribal) areas, the Gram Sabha has special powers that override even the Gram Panchayat.
+
+When Gram Sabha must be held (mandatory meetings):
+- Minimum 4 times per year (quarterly)
+- For MGNREGA social audit — biannual
+- Before approving any development project, mine, or land acquisition in the village
+- For approving FRA claims
+
+Gram Sabha powers in Scheduled Areas (under PESA):
+1. Approving beneficiary lists for all government schemes (housing, pension, MGNREGA, etc.)
+2. Managing and owning minor forest produce — no outside trader can buy MFP without Gram Sabha permission
+3. Recommending approval or rejection of mining/quarrying leases for minor minerals
+4. Resolving disputes using customary law and traditions
+5. Mandatory consultation before land acquisition — acquisition without Gram Sabha resolution is illegal
+6. Regulating money lending to tribals
+7. Preserving and managing community resources (water bodies, forests, common lands)
+
+Gram Sabha powers under FRA:
+- Forest Rights Committee (FRC) is formed by the Gram Sabha
+- Gram Sabha passes resolution recommending acceptance of forest rights claims
+- Gram Sabha manages Community Forest Rights (CFR) areas
+
+Your rights at Gram Sabha meetings:
+- Every adult voter has the right to attend and speak
+- Notice of meeting must be given 15 days in advance
+- Minutes must be recorded and made available publicly
+- If quorum not met (at least 10% of voters or minimum 100 persons), meeting is invalid
+
+Preventing misuse: If Gram Sabha meetings are being held without proper notice, secretly, or without quorum — file complaint to Mandal Revenue Officer (MRO) and Collector. Approach DLSA for legal remedy.`,
+  },
+
+  {
+    title: "Domestic Violence — How to Get a Protection Order Urgently",
+    category: "Women's Rights",
+    source: "Protection of Women from Domestic Violence Act 2005; Rules 2006",
+    content: `If you are facing domestic violence, you can get a Protection Order from a Magistrate within 3 days in urgent cases.
+
+Who can approach the court or Protection Officer:
+- The aggrieved woman herself
+- A Protection Officer on her behalf
+- Any person (neighbour, relative, child) who has reason to believe violence occurred
+
+Emergency steps (within 24 hours):
+1. Call 181 (Women's Helpline) — a Protection Officer will be dispatched
+2. Go to the nearest One Stop Centre (Sakhi Centre) in your district — available in every district of TS and AP
+3. Call 100 (Police) if there is immediate physical danger
+4. File complaint at any police station under Section 498-A IPC (cruelty by husband or his family) for domestic violence
+
+Getting a Protection Order from Magistrate:
+1. File Application (Aggrieved Person's Application — DV Form 1) before Judicial Magistrate First Class (JMFC)
+2. DLSA provides free legal aid and free lawyers for all domestic violence cases — no income test
+3. Court must hear the case and pass interim order on the same day if urgent (Section 23 DVPA)
+4. If you cannot go to court: Protection Officer can file application on your behalf
+
+Types of orders available:
+- **Protection Order (Section 18)**: Prevents the abuser from committing acts of violence, contacting you, entering your workplace or school
+- **Residence Order (Section 19)**: Right to stay in the shared household; you CANNOT be evicted — even if the house is owned by in-laws
+- **Monetary Relief (Section 20)**: Medical costs, loss of earnings, damage to property, maintenance for yourself and children
+- **Custody Order (Section 21)**: Temporary custody of children
+- **Compensation Order (Section 22)**: Damages for injuries and emotional distress
+
+Violation of a Protection Order: The abuser can be arrested immediately — it is a cognizable, non-bailable offence punishable with 1 year imprisonment.
+
+One Stop Centres (Sakhi): Provide free medical care, free legal aid, free shelter, free police facilitation, free counselling — all under one roof. Find yours through 181.`,
+  },
 ];
+
