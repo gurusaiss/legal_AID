@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { getSupabase } from "../lib/supabase";
+import { getDb } from "../lib/db";
 
 /** Generate a 768-dim embedding vector for the given text using Gemini. */
 export async function embedText(text: string, apiKey: string): Promise<number[]> {
@@ -9,38 +9,42 @@ export async function embedText(text: string, apiKey: string): Promise<number[]>
   return result.embedding.values;
 }
 
-interface DocChunk {
-  title: string;
-  content: string;
-  category: string;
-  source: string | null;
-}
-
 /**
  * Embed a user query and retrieve the top-k most similar legal document chunks
- * from Supabase pgvector. Returns formatted strings ready to inject into a prompt.
- * Returns an empty array if Supabase is not configured or query fails.
+ * from Neon pgvector. Returns formatted strings ready to inject into a prompt.
+ * Returns an empty array if the database is not configured or the query fails.
  */
 export async function retrieveRelevantChunks(
   query: string,
   apiKey: string,
   limit = 3,
 ): Promise<string[]> {
-  const supabase = getSupabase();
-  if (!supabase) return [];
+  const db = getDb();
+  if (!db) return [];
 
   try {
     const embedding = await embedText(query, apiKey);
+    const vectorLiteral = `[${embedding.join(",")}]`;
 
-    const { data, error } = await supabase.rpc("match_legal_documents", {
-      query_embedding: embedding,
-      match_threshold: 0.5,
-      match_count: limit,
-    });
+    const { rows } = await db.query<{
+      title: string;
+      content: string;
+      category: string;
+      source: string | null;
+      similarity: number;
+    }>(
+      `SELECT title, content, category, source,
+              1 - (embedding <=> $1::vector) AS similarity
+       FROM legal_documents
+       WHERE 1 - (embedding <=> $1::vector) > $2
+       ORDER BY similarity DESC
+       LIMIT $3`,
+      [vectorLiteral, 0.5, limit],
+    );
 
-    if (error || !data || (data as DocChunk[]).length === 0) return [];
+    if (!rows.length) return [];
 
-    return (data as DocChunk[]).map(
+    return rows.map(
       (doc) =>
         `[${doc.title} | ${doc.category}${doc.source ? " | Source: " + doc.source : ""}]\n${doc.content}`,
     );

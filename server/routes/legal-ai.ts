@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { retrieveRelevantChunks } from "../services/rag";
-import { getSupabase } from "../lib/supabase";
+import { getDb } from "../lib/db";
 
 const LANG_INSTRUCTIONS: Record<string, string> = {
   te: "Respond in Telugu (తెలుగు). Use simple, clear language that a rural user can understand. Explain legal terms in Telugu.",
@@ -99,17 +99,17 @@ export const handleFindLegalAid: RequestHandler = async (req, res) => {
   const { location } = req.query;
 
   // Try to fetch from DB first
-  const supabase = getSupabase();
+  const db = getDb();
 
-  if (supabase) {
-    const { data, error } = await supabase
-      .from("legal_aid_centers")
-      .select("*")
-      .order("name");
-
-    if (!error && data && data.length > 0) {
-      res.json({ centers: data, location: location || "your area", source: "database" });
-      return;
+  if (db) {
+    try {
+      const { rows } = await db.query("SELECT * FROM legal_aid_centers ORDER BY name");
+      if (rows.length > 0) {
+        res.json({ centers: rows, location: location || "your area", source: "database" });
+        return;
+      }
+    } catch (err) {
+      console.error("legal_aid_centers query error:", err);
     }
   }
 

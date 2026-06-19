@@ -4,15 +4,14 @@
  * Run once after setting up .env credentials:
  *   node scripts/seed-corpus.mjs
  *
- * Or force re-seed:
+ * Force re-seed (wipes and re-embeds everything):
  *   node scripts/seed-corpus.mjs --force
  *
  * Requires in .env:
  *   GEMINI_API_KEY=...
- *   SUPABASE_URL=...
- *   SUPABASE_SERVICE_ROLE_KEY=...
- *   SEED_SECRET=...         (same value you set in .env)
- *   PORT=3000               (or whatever port your server runs on)
+ *   DATABASE_URL=postgresql://...   (Neon connection string)
+ *   SEED_SECRET=...                 (any random string)
+ *   PORT=3000                       (or whatever your server runs on)
  */
 
 import { readFileSync } from "fs";
@@ -47,20 +46,17 @@ const FORCE = process.argv.includes("--force");
 // Pre-flight checks
 const missing = [];
 if (!env.GEMINI_API_KEY || env.GEMINI_API_KEY.includes("your_")) missing.push("GEMINI_API_KEY");
-if (!env.SUPABASE_URL || env.SUPABASE_URL.includes("your-project")) missing.push("SUPABASE_URL");
-if (!env.SUPABASE_SERVICE_ROLE_KEY || env.SUPABASE_SERVICE_ROLE_KEY.includes("your_")) missing.push("SUPABASE_SERVICE_ROLE_KEY");
+if (!env.DATABASE_URL || env.DATABASE_URL.includes("user:password")) missing.push("DATABASE_URL");
 if (!SEED_SECRET || SEED_SECRET === "change_me_to_something_random") missing.push("SEED_SECRET");
 
 if (missing.length) {
   console.error("\n❌  Missing or placeholder credentials in .env:\n");
-  for (const k of missing) {
-    console.error(`   • ${k}`);
-  }
+  for (const k of missing) console.error(`   • ${k}`);
   console.error("\n📋  Fill these in .env before running the seed.\n");
   console.error("   Get them from:");
-  console.error("   • GEMINI_API_KEY  → https://aistudio.google.com/app/apikey");
-  console.error("   • SUPABASE_URL + SERVICE_ROLE_KEY → https://supabase.com → Project Settings → API");
-  console.error("   • SEED_SECRET     → set any random string, e.g. seed_abc123xyz\n");
+  console.error("   • GEMINI_API_KEY  → https://aistudio.google.com/app/apikey  (free)");
+  console.error("   • DATABASE_URL    → https://console.neon.tech → New Project → Connection string");
+  console.error("   • SEED_SECRET     → any random string, e.g. seed_abc123xyz\n");
   process.exit(1);
 }
 
@@ -80,8 +76,7 @@ async function ping() {
 }
 
 async function seed() {
-  // Check server is up
-  console.log("\n⏳  Checking server…");
+  console.log("\n⏳  Waiting for server…");
   let attempts = 0;
   while (!(await ping())) {
     attempts++;
@@ -95,10 +90,9 @@ async function seed() {
   }
   console.log("\n✅  Server is up\n");
 
-  // Call seed endpoint
   const url = `${BASE_URL}/api/seed-corpus${FORCE ? "?force=true" : ""}`;
   console.log(`⚡  Calling ${url}`);
-  console.log("   (This embeds 20 legal documents via Gemini — takes ~45 seconds)\n");
+  console.log("   Embedding 20 legal documents via Gemini — takes ~60 seconds…\n");
 
   const res = await fetch(url, {
     method: "POST",
@@ -125,8 +119,8 @@ async function seed() {
       console.warn(`   Failed:   ${fail.length}`);
       for (const f of fail) console.warn(`   ✗ ${f.title}: ${f.error}`);
     }
-    console.log("\n🎉  RAG corpus is ready. The AI will now use real Indian legal sources.");
-    console.log("   Test it: open the AI Chat and ask 'How do I claim forest rights?'\n");
+    console.log("\n🎉  RAG corpus ready. AI will now cite real Indian law sections in every answer.");
+    console.log("   Test: open AI Chat and ask 'How do I claim forest rights?'\n");
   }
 }
 

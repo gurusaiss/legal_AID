@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { getSupabase } from "../lib/supabase";
+import { getDb } from "../lib/db";
 
 function generateCaseNumber(): string {
   const year = new Date().getFullYear();
@@ -16,70 +16,70 @@ export const handleSubmitCase: RequestHandler = async (req, res) => {
   }
 
   const caseNumber = generateCaseNumber();
-  const supabase = getSupabase();
+  const db = getDb();
 
-  if (!supabase) {
-    // No Supabase — return a locally-generated case number so the client can still track it
+  if (!db) {
     res.json({ caseNumber, offline: true, message: "Case recorded (database not configured)" });
     return;
   }
 
-  const { data, error } = await supabase
-    .from("cases")
-    .insert({
-      case_number: caseNumber,
-      session_id: sessionId || null,
-      name: name.trim(),
-      category: issueType.trim(),
-      district: district?.trim() || null,
-      description: description.trim(),
-      status: "submitted",
-      language_submitted: language || "en",
-    })
-    .select("id, case_number")
-    .single();
+  try {
+    const { rows } = await db.query<{ id: string; case_number: string }>(
+      `INSERT INTO cases
+         (case_number, session_id, name, category, district, description, status, language_submitted)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+       RETURNING id, case_number`,
+      [
+        caseNumber,
+        sessionId || null,
+        name.trim(),
+        issueType.trim(),
+        district?.trim() || null,
+        description.trim(),
+        "submitted",
+        language || "en",
+      ],
+    );
 
-  if (error) {
-    console.error("Supabase insert error:", error);
-    // Fall back gracefully — return locally-generated number
+    const newCase = rows[0];
+
+    // Record initial status update (non-fatal if it fails)
+    db.query(
+      `INSERT INTO case_updates (case_id, update_text, updated_by) VALUES ($1, $2, $3)`,
+      [newCase.id, "Case submitted. Our team will review it shortly.", "system"],
+    ).catch((err: unknown) => {
+      console.error("case_updates insert failed for case", newCase.id, err);
+    });
+
+    res.json({ caseNumber: newCase.case_number, id: newCase.id });
+  } catch (error: unknown) {
+    console.error("DB insert error:", error);
     res.json({ caseNumber, offline: true, message: "Case recorded (DB write failed)" });
-    return;
   }
-
-  // Record initial status entry (non-fatal if this fails — response already committed)
-  const { error: updateErr } = await supabase.from("case_updates").insert({
-    case_id: data.id,
-    update_text: "Case submitted. Our team will review it shortly.",
-    updated_by: "system",
-  });
-  if (updateErr) {
-    console.error("case_updates insert failed for case", data.id, updateErr.message);
-  }
-
-  res.json({ caseNumber: data.case_number, id: data.id });
 };
 
 export const handleGetCases: RequestHandler = async (req, res) => {
   const { sessionId } = req.query;
-  const supabase = getSupabase();
+  const db = getDb();
 
-  if (!supabase || !sessionId) {
+  if (!db || !sessionId) {
     res.json({ cases: [] });
     return;
   }
 
-  const { data, error } = await supabase
-    .from("cases")
-    .select("id, case_number, category, district, description, status, language_submitted, created_at, updated_at")
-    .eq("session_id", String(sessionId))
-    .order("created_at", { ascending: false })
-    .limit(100);
-
-  if (error) {
-    console.error("Supabase select error:", error);
+  try {
+    const { rows } = await db.query(
+      `SELECT id, case_number, category, district, description,
+              status, language_submitted, created_at, updated_at
+       FROM cases
+       WHERE session_id = $1
+       ORDER BY created_at DESC
+       LIMIT 100`,
+      [String(sessionId)],
+    );
+    res.json({ cases: rows });
+  } catch (error: unknown) {
+    console.error("DB select error:", error);
     res.json({ cases: [] });
-    return;
   }
-
-  res.json({ cases: data ?? [] });
 };

@@ -1,12 +1,10 @@
 import { RequestHandler } from "express";
-import { getSupabase } from "../lib/supabase";
+import { getDb } from "../lib/db";
 import { LEGAL_CORPUS } from "../data/legal-corpus";
 import { embedText } from "../services/rag";
 
 export const handleSeedCorpus: RequestHandler = async (req, res) => {
-  // Guard: SEED_SECRET must be set AND the caller must supply the matching header.
-  // If the env var is absent the endpoint is locked — "absent = open" would be a
-  // security hole that lets anyone wipe the corpus.
+  // Auth guard — SEED_SECRET must be set and caller must supply matching header
   const secret = process.env.SEED_SECRET?.trim();
   if (!secret || req.headers["x-seed-secret"] !== secret) {
     res.status(401).json({
@@ -23,35 +21,40 @@ export const handleSeedCorpus: RequestHandler = async (req, res) => {
     return;
   }
 
-  const supabase = getSupabase();
-  if (!supabase) {
-    res.status(400).json({ error: "SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY not set" });
+  const db = getDb();
+  if (!db) {
+    res.status(400).json({ error: "DATABASE_URL not set" });
     return;
   }
 
   const force = req.query.force === "true";
 
   if (!force) {
-    const { count, error: countErr } = await supabase
-      .from("legal_documents")
-      .select("*", { count: "exact", head: true });
-    if (countErr) {
-      res.status(500).json({ error: "Failed to check corpus status", details: countErr.message });
-      return;
-    }
-    if (count && count > 0) {
-      res.json({ message: `Corpus already seeded (${count} documents). Pass ?force=true to re-seed.`, count });
+    try {
+      const { rows } = await db.query<{ count: string }>(
+        "SELECT COUNT(*)::text AS count FROM legal_documents",
+      );
+      const count = parseInt(rows[0].count, 10);
+      if (count > 0) {
+        res.json({
+          message: `Corpus already seeded (${count} documents). Pass ?force=true to re-seed.`,
+          count,
+        });
+        return;
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      res.status(500).json({ error: "Failed to check corpus status", details: msg });
       return;
     }
   }
 
   // Truncate before re-seeding
-  const { error: deleteErr } = await supabase
-    .from("legal_documents")
-    .delete()
-    .neq("id", "00000000-0000-0000-0000-000000000000");
-  if (deleteErr) {
-    res.status(500).json({ error: "Failed to clear existing corpus", details: deleteErr.message });
+  try {
+    await db.query("DELETE FROM legal_documents");
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    res.status(500).json({ error: "Failed to clear existing corpus", details: msg });
     return;
   }
 
@@ -62,18 +65,16 @@ export const handleSeedCorpus: RequestHandler = async (req, res) => {
     try {
       console.log(`[seed] Embedding ${i + 1}/${LEGAL_CORPUS.length}: ${doc.title}`);
       const embedding = await embedText(doc.content, apiKey);
+      const vectorLiteral = `[${embedding.join(",")}]`;
 
-      const { error } = await supabase.from("legal_documents").insert({
-        title: doc.title,
-        content: doc.content,
-        category: doc.category,
-        source: doc.source,
-        chunk_index: i,
-        language: "en",
-        embedding,
-      });
+      await db.query(
+        `INSERT INTO legal_documents
+           (title, content, category, source, chunk_index, language, embedding)
+         VALUES ($1, $2, $3, $4, $5, $6, $7::vector)`,
+        [doc.title, doc.content, doc.category, doc.source, i, "en", vectorLiteral],
+      );
 
-      results.push({ title: doc.title, ok: !error, error: error?.message });
+      results.push({ title: doc.title, ok: true });
 
       // Brief pause to respect Gemini rate limits
       await new Promise((r) => setTimeout(r, 200));
