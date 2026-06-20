@@ -11,8 +11,8 @@ export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
   
   const config: UserConfig = {
-    // Base URL configuration
-    base: isProduction ? '/legal_AID/' : '/',
+    // Base URL: '/' for Railway/Render; set BASE_URL=/legal_AID/ for GitHub Pages
+    base: process.env.BASE_URL || '/',
     
     // Plugins (Express API on same origin in dev — see vite-plugin-express-api.ts)
     plugins: [react(), expressApiPlugin()],
@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
     
     // Build configuration
     build: {
-      outDir: 'dist',
+      outDir: 'dist/spa',
       emptyOutDir: true,
       sourcemap: !isProduction,
       minify: isProduction ? 'esbuild' : false,

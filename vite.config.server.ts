@@ -32,6 +32,10 @@ export default defineConfig({
         // External dependencies that should not be bundled
         "express",
         "cors",
+        "pg",
+        "dotenv",
+        "dotenv/config",
+        "@google/generative-ai",
       ],
       output: {
         format: "es",
